@@ -1,0 +1,92 @@
+paths:
+  raw_train_path: Data/raw/train.csv
+  sample_submission_path: Data/raw/sample_submission.csv
+  legacy_raw_dir: Data
+  processed_dir: data/processed
+  features_dir: data/features
+  reports_dir: reports
+  submissions_dir: submissions
+  models_dir: models
+  archive_dir: submissions/archive
+  notebooks_dir: notebooks
+  output_submission_path: submissions/submission.csv
+run_control:
+  random_seed: 42
+  run_mode: full
+  smoke_n_skus: 500
+  smoke_top_profit_skus: 250
+  smoke_sku_selection_method: top_profit_then_sample_order
+  target_variant: net_daily_qty_clip0
+  baseline_method: simple_pipeline_sunday_zero
+  enable_lightgbm: false
+  enable_recursive_inference: false
+competition:
+  train_start: '2020-11-17'
+  train_end: '2025-09-05'
+  forecast_horizon: 56
+  public_horizon: 28
+  validation_start: '2025-09-06'
+  validation_end: '2025-10-03'
+  evaluation_start: '2025-10-04'
+  evaluation_end: '2025-10-31'
+metric:
+  metric_name: profit_weighted_wrmsse
+  zero_scale_epsilon: 1.0e-09
+  negative_profit_weight_policy: zero
+submission:
+  output_submission_path: submissions/submission.csv
+  archive_existing_submission: true
+  validate_sample_order: true
+features:
+  lags:
+  - 1
+  - 2
+  - 3
+  - 7
+  - 14
+  - 21
+  - 28
+  - 35
+  - 56
+  - 84
+  - 91
+  - 112
+  - 182
+  - 364
+  rolling_windows:
+  - 7
+  - 14
+  - 28
+  - 56
+  - 90
+  - 180
+  - 365
+  recent_windows:
+  - 28
+  - 56
+  - 90
+  - 180
+  - 365
+validation:
+  cv_folds:
+  - fold: fold_1
+    train_end: '2025-05-16'
+    valid_start: '2025-05-17'
+    valid_end: '2025-07-11'
+  - fold: fold_2
+    train_end: '2025-06-13'
+    valid_start: '2025-06-14'
+    valid_end: '2025-08-08'
+  - fold: fold_3
+    train_end: '2025-07-11'
+    valid_start: '2025-07-12'
+    valid_end: '2025-09-05'
+training:
+  smoke:
+    num_boost_round: 150
+    early_stopping_rounds: 30
+    max_train_rows: 500000
+  full:
+    num_boost_round: 3000
+    early_stopping_rounds: 200
+    max_train_rows: null

@@ -1,4 +1,10 @@
+Data/
 data/
-submissions/
-.ipynb_checkpoints/
+models/
+submissions/*.csv
+*.parquet
+*.pkl
+*.joblib
+.venv/
+__pycache__/
 .DS_Store
