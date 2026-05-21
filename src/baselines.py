@@ -217,10 +217,56 @@ def simple_raw_pipeline_forecast(
 ) -> pd.DataFrame:
     """Simple baseline inspired by the current notebook: mean demand with Sunday zeroing."""
 
-    base = last_mean_forecast(history, skus, forecast_dates, target_col, window=56)
+    # 1. Calculate 56-day and 28-day means
+    matrix = _history_matrix(history, "ItemCode", "Date", target_col, skus)
+    means_56 = matrix.tail(56).mean(axis=0).to_numpy(dtype=float)
+    means_28 = matrix.tail(28).mean(axis=0).to_numpy(dtype=float)
+
+    # 2. Identify Top 100 SKUs and Class A SKUs by profit net
+    profit_col = "profit_net" if "profit_net" in history.columns else target_col
+    sku_profits = history.groupby("ItemCode")[profit_col].sum().clip(lower=0)
+    sku_profits = sku_profits.reindex(skus, fill_value=0.0).to_numpy(dtype=float)
+    
+    # Blending for Top 100 SKUs by profit
+    top_100_idx = np.argsort(-sku_profits)[:100]
+    is_top_100 = np.zeros(len(skus), dtype=bool)
+    is_top_100[top_100_idx] = True
+    
+    final_means = np.where(is_top_100, 0.95 * means_56 + 0.05 * means_28, means_56)
+    
+    # 3. Create baseline long forecast
+    values = np.tile(final_means, (len(forecast_dates), 1))
+    base = _long_forecast(values, skus, forecast_dates, "simple_pipeline_sunday_zero")
+    
+    # 4. Sunday zeroing
     sunday_mask = base["Date"].dt.dayofweek == 6
     base.loc[sunday_mask, "y_pred"] = 0.0
-    base["model_name"] = "simple_pipeline_sunday_zero"
+    
+    # 5. Month-start/end adjustments for Class A SKUs (top 80% cum profit)
+    total_profit = sku_profits.sum()
+    class_a_mask = np.zeros(len(skus), dtype=bool)
+    if total_profit > 0:
+        sorted_idx = np.argsort(-sku_profits)
+        sorted_profits = sku_profits[sorted_idx]
+        cum_profits = np.cumsum(sorted_profits) / total_profit
+        
+        for idx, val in zip(sorted_idx, cum_profits):
+            if val <= 0.80:
+                class_a_mask[idx] = True
+            else:
+                if not class_a_mask.any():
+                    class_a_mask[sorted_idx[0]] = True
+                break
+                
+    class_a_items = {skus[i] for i in range(len(skus)) if class_a_mask[i]}
+    
+    # Check if month boundary (month-start or month-end)
+    is_month_boundary = base["Date"].dt.is_month_start | base["Date"].dt.is_month_end
+    
+    # Apply 0.95 factor for Class A boundary dates
+    adjust_mask = is_month_boundary & base["ItemCode"].isin(class_a_items)
+    base.loc[adjust_mask, "y_pred"] *= 0.95
+    
     return base
 
 

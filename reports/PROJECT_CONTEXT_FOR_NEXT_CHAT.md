@@ -1,10 +1,10 @@
 # Project Context For Next Chat
 
 ## Current Champion
-- Public LB: 0.50631
-- Path: `submissions/champion/public_lb_0_50_champion.csv`
-- Hash: `bd159feba71da198a96d319e2f311e47905695eb772a40583c5585bdad8b1139`
-- Champion logic: `simple_pipeline_sunday_zero` with weight 1.0; recursive LGBM had weight 0.0.
+- Public LB: 0.50566
+- Path: `submissions/submission.csv`
+- Hash: `e6ced5b9990d843c9e38eea70fe95afe5b2fd9f9e61d0d1676592727da92bb06`
+- Champion logic: `simple_pipeline_sunday_zero` (optimized with 28-day blend for top 100 SKUs & month boundary downscaling for Class A)
 
 ## Failed Submission
 - Submitted file: `submissions/recommended/submit_01_b_global_0_975.csv`

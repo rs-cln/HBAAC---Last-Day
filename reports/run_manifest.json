@@ -1,0 +1,269 @@
+{
+  "config": {
+    "competition": {
+      "evaluation_end": "2025-10-31",
+      "evaluation_start": "2025-10-04",
+      "forecast_horizon": 56,
+      "public_horizon": 28,
+      "train_end": "2025-09-05",
+      "train_start": "2020-11-17",
+      "validation_end": "2025-10-03",
+      "validation_start": "2025-09-06"
+    },
+    "features": {
+      "lags": [
+        1,
+        2,
+        3,
+        7,
+        14,
+        21,
+        28,
+        35,
+        56,
+        84,
+        91,
+        112,
+        182,
+        364
+      ],
+      "recent_windows": [
+        28,
+        56,
+        90,
+        180,
+        365
+      ],
+      "rolling_windows": [
+        7,
+        14,
+        28,
+        56,
+        90,
+        180,
+        365
+      ]
+    },
+    "metric": {
+      "metric_name": "profit_weighted_wrmsse",
+      "negative_profit_weight_policy": "zero",
+      "zero_scale_epsilon": 1e-09
+    },
+    "paths": {
+      "archive_dir": "submissions/archive",
+      "features_dir": "data/features",
+      "legacy_raw_dir": "Data",
+      "models_dir": "models",
+      "notebooks_dir": "notebooks",
+      "output_submission_path": "submissions/submission.csv",
+      "processed_dir": "data/processed",
+      "raw_train_path": "Data/raw/train.csv",
+      "reports_dir": "reports",
+      "sample_submission_path": "Data/raw/sample_submission.csv",
+      "submissions_dir": "submissions"
+    },
+    "run_control": {
+      "baseline_method": "simple_pipeline_sunday_zero",
+      "enable_lightgbm": false,
+      "enable_recursive_inference": false,
+      "random_seed": 42,
+      "run_mode": "full",
+      "smoke_n_skus": 500,
+      "smoke_sku_selection_method": "top_profit_then_sample_order",
+      "smoke_top_profit_skus": 250,
+      "target_variant": "net_daily_qty_clip0"
+    },
+    "submission": {
+      "archive_existing_submission": true,
+      "output_submission_path": "submissions/submission.csv",
+      "validate_sample_order": true
+    },
+    "training": {
+      "full": {
+        "early_stopping_rounds": 200,
+        "max_train_rows": null,
+        "num_boost_round": 3000
+      },
+      "smoke": {
+        "early_stopping_rounds": 30,
+        "max_train_rows": 500000,
+        "num_boost_round": 150
+      }
+    },
+    "validation": {
+      "cv_folds": [
+        {
+          "fold": "fold_1",
+          "train_end": "2025-05-16",
+          "valid_end": "2025-07-11",
+          "valid_start": "2025-05-17"
+        },
+        {
+          "fold": "fold_2",
+          "train_end": "2025-06-13",
+          "valid_end": "2025-08-08",
+          "valid_start": "2025-06-14"
+        },
+        {
+          "fold": "fold_3",
+          "train_end": "2025-07-11",
+          "valid_end": "2025-09-05",
+          "valid_start": "2025-07-12"
+        }
+      ]
+    }
+  },
+  "extra": {
+    "archived_submission": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\submissions\\archive\\submission_20260521_104750.csv",
+    "baseline_method": "simple_pipeline_sunday_zero",
+    "clean_report": {
+      "all_negative_return_rows": 37279,
+      "date_max": "2025-09-05T00:00:00",
+      "date_min": "2020-11-17T00:00:00",
+      "dropped_critical_rows": 0,
+      "initial_rows": 711980,
+      "negative_quantity_rows": 37434,
+      "rows_after_critical_cleaning": 711980,
+      "sign_mismatch_rows": 34,
+      "unique_skus": 15972,
+      "zero_quantity_rows": 3164
+    },
+    "target_variant": "net_daily_qty_clip0"
+  },
+  "feature_matrix_shape": null,
+  "generator": "scripts/03_run_full_baseline.py::run_baseline_pipeline",
+  "git_commit": null,
+  "inputs": {
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\Data\\raw\\sample_submission.csv": {
+      "exists": true,
+      "modified_time_utc": "2026-05-19T10:36:44Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\Data\\raw\\sample_submission.csv",
+      "sha256": "ecf7d8d351d60b08174d9294f85eb1b6f80f81e4d23c5ae60c88a98a0cea48e8",
+      "size_bytes": 2491739
+    },
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\Data\\raw\\train.csv": {
+      "exists": true,
+      "modified_time_utc": "2026-05-19T10:36:41Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\Data\\raw\\train.csv",
+      "sha256": "268f5b6f185fb53ddd60e8853177742ec745262a3752fbafa53323a38c7924af",
+      "size_bytes": 45830165
+    }
+  },
+  "number_of_skus_used": 15972,
+  "package_versions": {
+    "lightgbm": {
+      "imports": true,
+      "installed": true,
+      "version": "4.6.0"
+    },
+    "numpy": {
+      "imports": true,
+      "installed": true,
+      "version": "2.4.1"
+    },
+    "optuna": {
+      "imports": true,
+      "installed": true,
+      "version": "4.8.0"
+    },
+    "pandas": {
+      "imports": true,
+      "installed": true,
+      "version": "3.0.0"
+    },
+    "pyarrow": {
+      "imports": true,
+      "installed": true,
+      "version": "24.0.0"
+    },
+    "sklearn": {
+      "imports": true,
+      "installed": true,
+      "version": "1.8.0"
+    }
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processed_artifacts": {
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\features\\features_net_daily_qty_clip0.parquet": {
+      "exists": true,
+      "modified_time_utc": "2026-05-21T10:46:41Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\features\\features_net_daily_qty_clip0.parquet",
+      "row_count": 543895,
+      "size_bytes": 44433967
+    },
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\processed\\daily_panel_active_span.parquet": {
+      "exists": true,
+      "modified_time_utc": "2026-05-21T10:49:25Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\processed\\daily_panel_active_span.parquet",
+      "row_count": 14109033,
+      "size_bytes": 37760784
+    },
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\processed\\daily_panel_full_span.parquet": {
+      "exists": true,
+      "modified_time_utc": "2026-05-21T10:49:39Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\processed\\daily_panel_full_span.parquet",
+      "row_count": 28014888,
+      "size_bytes": 49782671
+    },
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\processed\\daily_sparse.parquet": {
+      "exists": true,
+      "modified_time_utc": "2026-05-21T10:49:18Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\processed\\daily_sparse.parquet",
+      "row_count": 507050,
+      "size_bytes": 10629566
+    },
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\processed\\demand_classification.parquet": {
+      "exists": true,
+      "modified_time_utc": "2026-05-21T10:51:19Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\processed\\demand_classification.parquet",
+      "row_count": 15972,
+      "size_bytes": 1339786
+    },
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\processed\\profit_weights.parquet": {
+      "exists": true,
+      "modified_time_utc": "2026-05-21T10:49:39Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\processed\\profit_weights.parquet",
+      "row_count": 15972,
+      "size_bytes": 701826
+    },
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\processed\\sku_profile.parquet": {
+      "exists": true,
+      "modified_time_utc": "2026-05-21T10:49:39Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\data\\processed\\sku_profile.parquet",
+      "row_count": 15972,
+      "size_bytes": 465245
+    },
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\reports\\ablation_results.csv": {
+      "exists": true,
+      "modified_time_utc": "2026-05-21T10:51:19Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\reports\\ablation_results.csv",
+      "row_count": 1,
+      "size_bytes": 49
+    },
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\reports\\ensemble_weights.csv": {
+      "exists": true,
+      "modified_time_utc": "2026-05-21T10:51:19Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\reports\\ensemble_weights.csv",
+      "row_count": 1,
+      "size_bytes": 52
+    },
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\reports\\profit_concentration.csv": {
+      "exists": true,
+      "modified_time_utc": "2026-05-21T10:49:39Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\reports\\profit_concentration.csv",
+      "row_count": 5,
+      "size_bytes": 141
+    },
+    "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\submissions\\before_ensemble\\simple_pipeline_sunday_zero.csv": {
+      "exists": true,
+      "modified_time_utc": "2026-05-21T10:55:12Z",
+      "path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\submissions\\before_ensemble\\simple_pipeline_sunday_zero.csv",
+      "row_count": 894432,
+      "size_bytes": 28813299
+    }
+  },
+  "python_version": "3.13.13 (tags/v3.13.13:01104ce, Apr  7 2026, 19:25:48) [MSC v.1944 64 bit (AMD64)]",
+  "run_mode": "full",
+  "submission_path": "D:\\Study source\\HBAAC\\HBAAC---Last-Day\\submissions\\submission.csv",
+  "timestamp": "2026-05-21T10:55:15Z"
+}

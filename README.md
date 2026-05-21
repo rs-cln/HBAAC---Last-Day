@@ -3,9 +3,9 @@
 This is a GitHub-safe release folder for reproducing the current HBAAC champion-style deterministic baseline.
 
 ## Champion
-- Champion Public LB: `0.50631`
-- Champion hash: `bd159feba71da198a96d319e2f311e47905695eb772a40583c5585bdad8b1139`
-- Champion logic: `simple_pipeline_sunday_zero`
+- Champion Public LB: `0.50566`
+- Champion hash: `e6ced5b9990d843c9e38eea70fe95afe5b2fd9f9e61d0d1676592727da92bb06`
+- Champion logic: `simple_pipeline_sunday_zero` (optimized with 28-day blend for top 100 SKUs & month boundary downscaling for Class A)
 - Raw Kaggle data is **not included**.
 
 ## Data Required
